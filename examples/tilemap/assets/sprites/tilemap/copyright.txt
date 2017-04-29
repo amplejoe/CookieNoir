@@ -1,0 +1,2 @@
+Not for commercial use!
+Taken from phaser example assets:  https://github.com/photonstorm/phaser-examples/tree/master/examples/assets

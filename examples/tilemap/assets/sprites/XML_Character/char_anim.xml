@@ -1,0 +1,18 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="guy_01.png" x="0" y="52" width="16" height="24"/>
+	<SubTexture name="guy_02.png" x="18" y="0" width="15" height="24"/>
+	<SubTexture name="guy_03.png" x="0" y="26" width="16" height="24"/>
+	<SubTexture name="guy_04.png" x="18" y="26" width="15" height="24"/>
+	<SubTexture name="guy_05.png" x="18" y="52" width="11" height="23"/>
+	<SubTexture name="guy_06.png" x="26" y="104" width="11" height="22"/>
+	<SubTexture name="guy_07.png" x="18" y="52" width="11" height="23"/>
+	<SubTexture name="guy_08.png" x="34" y="77" width="11" height="22"/>
+	<SubTexture name="guy_09.png" x="31" y="52" width="11" height="23"/>
+	<SubTexture name="guy_10.png" x="13" y="104" width="11" height="22"/>
+	<SubTexture name="guy_11.png" x="31" y="52" width="11" height="23"/>
+	<SubTexture name="guy_12.png" x="0" y="104" width="11" height="22"/>
+	<SubTexture name="guy_13.png" x="0" y="0" width="16" height="24"/>
+	<SubTexture name="guy_14.png" x="17" y="78" width="15" height="24"/>
+	<SubTexture name="guy_15.png" x="0" y="0" width="16" height="24"/>
+	<SubTexture name="guy_16.png" x="0" y="78" width="15" height="24"/>
+</TextureAtlas>
