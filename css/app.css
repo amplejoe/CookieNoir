@@ -1,0 +1,25 @@
+body
+{
+    /* list any fonts that are used in game */
+    font-family: 'Font Awesome';
+}
+
+/* Font Awesome 4.7.0 (http://fontawesome.io) */
+@font-face {
+  font-family: 'Font Awesome';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontawesome4.7.0/fontawesome-webfont.eot'); /* IE9 Compat Modes */
+  src: local('Font Awesome'), local('FontAwesome'),
+       url('../fonts/fontawesome4.7.0/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/fontawesome4.7.0/fontawesome-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/fontawesome4.7.0/fontawesome-webfont.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/fontawesome4.7.0/fontawesome-webfont.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/fontawesome4.7.0/fontawesome-webfont.svg#FontAwesome') format('svg'); /* Legacy iOS */
+}
+
+#dummy_for_downloaded_font
+{
+  position: absolute;
+  text-indent: -9999px;  /* moves text offscreen */
+}

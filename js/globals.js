@@ -15,3 +15,5 @@ CookieNoir.CLIENT_TYPE =
     PLAYER : 1,
     OBSERVER : 2,
 };
+
+CookieNoir.DirectionIcons = {up: "\uf062", down:"\uf063", left:"\uf060", right:"\uf061"};

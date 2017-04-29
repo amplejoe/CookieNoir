@@ -16,6 +16,9 @@ CookieNoir.GameParallax = function (game)
   this.currentLayer;
 
   this.observerClient;
+
+  // show direction arrows
+  this.directionIndicator;
 };
 
 CookieNoir.GameParallax.prototype =
@@ -75,10 +78,18 @@ CookieNoir.GameParallax.prototype =
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
+<<<<<<< Updated upstream
     let treeStruct = new DataStructures.Tree();
     let root = treeStruct.root.addChild(new DataStructures.TreeNode(this.foreground));
     let node1_1 = root.addChild(new DataStructures.TreeNode(this.middle1));
     let node1_2 = root.addChild(new DataStructures.TreeNode(this.hidden));
+=======
+    // text for direction indication
+    this.setDirectionArrow(CookieNoir.DirectionIcons.up);
+
+
+    // this.fontAwesome
+>>>>>>> Stashed changes
 
   },
   update: function ()
@@ -95,6 +106,20 @@ CookieNoir.GameParallax.prototype =
   {
     // debug text output
     this.game.debug.text("Player Game.", 5, 32);
+  },
+  setDirectionArrow: function(direction)
+  {
+    let text = this.add.text(this.world.centerX, 32,
+    direction,
+    {
+      fill: "#ffffff",
+      align: "center",
+      font: '40px Font Awesome'
+    });
+    text.anchor.setTo(0.5,0.0);
+    let alphaTween = this.game.add.tween(text).to( { alpha: 0.1  }, 1000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+
+    this.directionIndicator = {text: text, tween: alphaTween};
   },
   movePlayer: function()
   {
