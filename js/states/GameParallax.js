@@ -78,18 +78,8 @@ CookieNoir.GameParallax.prototype =
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-<<<<<<< Updated upstream
-    let treeStruct = new DataStructures.Tree();
-    let root = treeStruct.root.addChild(new DataStructures.TreeNode(this.foreground));
-    let node1_1 = root.addChild(new DataStructures.TreeNode(this.middle1));
-    let node1_2 = root.addChild(new DataStructures.TreeNode(this.hidden));
-=======
     // text for direction indication
     this.setDirectionArrow(CookieNoir.DirectionIcons.up);
-
-
-    // this.fontAwesome
->>>>>>> Stashed changes
 
   },
   update: function ()
