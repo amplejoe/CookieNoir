@@ -6,12 +6,21 @@ CookieNoir.Game2d = function (game)
   // buttons
   this.cursors;
 
+  this.playerClient;
 };
 
 CookieNoir.Game2d.prototype =
 {
   create: function ()
   {
+
+    // player communication
+    // INFO: need to start server first via startserver.sh
+    this.playerClient = new CookieNoir.Client(
+      CookieNoir.SERVER_ADDRESS, CookieNoir.SERVER_PORT, CookieNoir.CLIENT_TYPE.OBSERVER);
+    this.playerClient.connect();
+
+
 
     // buttons
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -33,6 +42,6 @@ CookieNoir.Game2d.prototype =
   render: function ()
   {
     // debug text output
-    this.game.debug.text("Debug output.", 5, this.world.height - 10);
+    this.game.debug.text("Observer Game.", 5, this.world.height - 10);
   }
 };

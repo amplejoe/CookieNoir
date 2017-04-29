@@ -37,7 +37,8 @@ CookieNoir.Client.prototype =
       if (cMsg.type == "init") {
           //console.log("received for init: " + evt.data);
           myClientId = cMsg.clientId;
-          console.log("ID: " + myClientId);
+          let type = "Unknown";
+          console.log(cMsg.clientType + " ID: " + myClientId);
 
       }
       else if (cMsg.type == "playerexists")

@@ -5,12 +5,19 @@ CookieNoir.GameParallax = function (game)
   // buttons
   this.cursors;
 
+  this.observerClient;
+
 };
 
 CookieNoir.GameParallax.prototype =
 {
   create: function ()
   {
+    // observer communication
+    // INFO: need to start server first via startserver.sh
+    this.observerClient = new CookieNoir.Client(
+      CookieNoir.SERVER_ADDRESS, CookieNoir.SERVER_PORT, CookieNoir.CLIENT_TYPE.PLAYER);
+    this.observerClient.connect();
 
     // buttons
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -32,6 +39,6 @@ CookieNoir.GameParallax.prototype =
   render: function ()
   {
     // debug text output
-    this.game.debug.text("Debug output.", 5, this.world.height - 10);
+    this.game.debug.text("Player Game.", 5, this.world.height - 10);
   }
 };

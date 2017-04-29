@@ -88,7 +88,8 @@ wsServer.on('request', function(request) {
           allConnections.push(dictEntry);
           let response = {
             type: 'init',
-            clientId: dictEntry.id
+            clientId: dictEntry.id,
+            clientType: dictEntry.type
           };
           connection.sendUTF(JSON.stringify(response));
 

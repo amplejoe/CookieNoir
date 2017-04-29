@@ -47,15 +47,17 @@ CookieNoir.Title.prototype =
     // let placeholder = this.make.sprite(0, 0, 'placeholder');
     let player2d = this.add.button(40, 50, 'btnPlayer2d', actionOnClick, this, 2, 1, 0);
     player2d.scale.setTo(0.7);
-    player2d.onInputOver.add(over, this);
-    player2d.onInputOut.add(out, this);
-    player2d.onInputUp.add(up, this);
+    // player2d.onInputOver.add(over, this);
+    // player2d.onInputOut.add(out, this);
+    // player2d.onInputUp.add(up, this);
+    player2d.onInputUp.add(() => {this.state.start('Game2d')}, this);
 
     let playerParallax = this.add.button(420, 100, 'btnPlayerParallax', actionOnClick, this, 2, 1, 0);
     playerParallax.scale.setTo(0.25);
-    playerParallax.onInputOver.add(over, this);
-    playerParallax.onInputOut.add(out, this);
-    playerParallax.onInputUp.add(up, this);
+    playerParallax.onInputUp.add(() => {this.state.start('GameParallax')}, this);
+    // playerParallax.onInputOver.add(over, this);
+    // playerParallax.onInputOut.add(out, this);
+    // playerParallax.onInputUp.add(up, this);
 
   },
   update: function()
@@ -69,6 +71,7 @@ CookieNoir.Title.prototype =
 
 function up() {
     console.log('button up', arguments);
+    console.log("THis" + this);
 }
 
 function over() {
