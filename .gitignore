@@ -3,6 +3,7 @@
 *.log
 *.sql
 *.sqlite
+serverlog.txt
 
 # OS generated files #
 ######################
