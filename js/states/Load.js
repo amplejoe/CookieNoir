@@ -31,6 +31,14 @@ CookieNoir.Load.prototype =
     this.load.image('btnPlayer2d', 'assets/sprites/map.png');
     this.load.image('btnPlayerParallax', 'assets/sprites/parallax.png');
 
+    // background layers
+    this.load.image('bg_z-3', 'assets/sprites/bg-z3.png');
+    this.load.image('bg_z-2', 'assets/sprites/bg-z2.png');
+    this.load.image('layer0', 'assets/sprites/layer0.png');
+    this.load.image('layer1', 'assets/sprites/layer1.png');
+    this.load.image('layer2', 'assets/sprites/layer2.png');
+    this.load.image('layer3', 'assets/sprites/layer3.png');
+    this.load.image('layer4', 'assets/sprites/layer4.png');
   },
   loadUpdate: function()
   {
@@ -39,6 +47,6 @@ CookieNoir.Load.prototype =
   create: function()
   {
     // start Title state
-    this.state.start('Title');
+    this.state.start('GameParallax');
   }
 };

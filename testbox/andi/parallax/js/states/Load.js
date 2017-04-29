@@ -29,6 +29,7 @@ Tutorial.Load.prototype =
     // background layers
     this.load.image('bg_z-2', 'assets/sprites/z-2.png');
     this.load.image('bg_z-1', 'assets/sprites/z-1.png');
+    this.load.image('z0-bizarro', 'assets/sprites/z0-bizarro.png');
     this.load.image('bg_z0', 'assets/sprites/z0.png');
 
   },
