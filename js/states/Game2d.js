@@ -1,6 +1,4 @@
-
-CookieNoir.Game2d = function (game)
-{
+CookieNoir.Game2d = function(game) {
   /* members */
 
   // buttons
@@ -9,10 +7,8 @@ CookieNoir.Game2d = function (game)
   this.playerClient;
 };
 
-CookieNoir.Game2d.prototype =
-{
-  create: function ()
-  {
+CookieNoir.Game2d.prototype = {
+  create: function() {
 
     // player communication
     // INFO: need to start server first via startserver.sh
@@ -20,27 +16,20 @@ CookieNoir.Game2d.prototype =
       CookieNoir.SERVER_ADDRESS, CookieNoir.SERVER_PORT, CookieNoir.CLIENT_TYPE.OBSERVER);
     this.playerClient.connect();
 
-
-
     // buttons
     this.cursors = this.input.keyboard.createCursorKeys();
   },
-  update: function ()
-  {
+  update: function() {
 
     // movement
-    if (this.cursors.left.isDown)
-    {
-        // this.player.body.velocity.x = -250;
-    }
-    else if (this.cursors.right.isDown)
-    {
-        // this.player.body.velocity.x = 250;
+    if (this.cursors.left.isDown) {
+      // this.player.body.velocity.x = -250;
+    } else if (this.cursors.right.isDown) {
+      // this.player.body.velocity.x = 250;
     }
 
   },
-  render: function ()
-  {
+  render: function() {
     // debug text output
     this.game.debug.text("Observer Game.", 5, 32);
   }

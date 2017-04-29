@@ -30,7 +30,6 @@ CookieNoir.GameParallax.prototype =
     this.currentLayer = 'layer0';
     this.hidden = this.game.add.group();
     this.background = this.game.add.group();
-    this.middle2 = this.game.add.group();
     this.middle1 = this.game.add.group();
     this.foreground = this.game.add.group();
 
@@ -75,6 +74,12 @@ CookieNoir.GameParallax.prototype =
     });
 
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    let treeStruct = new DataStructures.Tree();
+    let root = treeStruct.root.addChild(new DataStructures.TreeNode(this.foreground));
+    let node1_1 = root.addChild(new DataStructures.TreeNode(this.middle1));
+    let node1_2 = root.addChild(new DataStructures.TreeNode(this.hidden));
+
   },
   update: function ()
   {
