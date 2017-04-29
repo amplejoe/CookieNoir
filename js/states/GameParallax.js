@@ -5,11 +5,9 @@ CookieNoir.GameParallax = function (game)
   this.bgTile0;
   this.bgTile1;
 
-  this.layer0;
-  this.layer1;
-  this.layer2;
-  this.layer3;
-  this.layer4;
+  this.platform0;
+  this.platform1;
+
   // buttons
   this.cursors;
 
@@ -30,51 +28,39 @@ CookieNoir.GameParallax.prototype =
     this.observerClient = new CookieNoir.Client(
       CookieNoir.SERVER_ADDRESS, CookieNoir.SERVER_PORT, CookieNoir.CLIENT_TYPE.PLAYER);
     this.observerClient.connect();
-    this.currentLayer = 'layer0';
-    this.hidden = this.game.add.group();
+
+    // groups
     this.background = this.game.add.group();
-    this.middle1 = this.game.add.group();
+    this.middle = this.game.add.group();
     this.foreground = this.game.add.group();
 
-    // bg far
+    // background
     this.bgTile0 = this.add.tileSprite(0, 0, this.world.width, this.game.cache.getImage('bg_z-3').height, 'bg_z-3');
-    // bg near
     this.bgTile1 = this.add.tileSprite(0, 0,this.world.width, this.game.cache.getImage('bg_z-2').height, 'bg_z-2');
-
     this.background.add(this.bgTile0);
     this.background.add(this.bgTile1);
 
-    this.layer0 = this.add.sprite(0, 0, 'layer0');
-    this.layer1 = this.add.sprite(0, 100, 'layer1');
-    //this.layer1 = this.add.sprite(0, 100,this.world.width, this.game.cache.getImage('layer1').height, 'layer1');
-    //this.layer2 = this.add.tileSprite(0, 160,this.world.width, this.game.cache.getImage('layer2').height, 'layer2');
-    //this.layer3 = this.add.tileSprite(0, 160,this.world.width, this.game.cache.getImage('layer3').height, 'layer3');
-    //this.layer4 = this.add.tileSprite(0, 160,this.world.width, this.game.cache.getImage('layer4').height, 'layer4');
-    //this.world.setBounds(0, 0, this.layer1.width, 600);
+    // active platforms
+    this.platform0 = this.add.sprite(0, 0, 'layer0');
+    this.platform1 = this.add.sprite(0, this.world.height, 'layer1');
+    this.platform1.scale.setTo(0.7, 0.7);
+    this.platform1.anchor.setTo(0.0,1.0);
+    this.platform1.position.y -= 100;
+    this.foreground.add(this.platform0);
+    this.middle.add(this.platform1);
 
-    this.layer1.scale.setTo(0.7, 0.7);
-    //this.layer2.tileScale.setTo(0.5, 0.5);
-
-    this.layerArray = [];
-    this.layerArray.push(this.layer0);
-    this.layerArray.push(this.layer1);
-    //this.layerArray.push(this.layer2);
-    //this.layerArray.push(this.layer3);
-    //this.layerArray.push(this.layer4);
-
-    this.foreground.add(this.layer0);
-    this.middle1.add(this.layer1);
-    //this.middle2.add(this.layer2);
-    //this.hidden.add(this.layer3);
-    //this.hidden.add(this.layer4);
-
-    this.hidden.visible = false;
     // buttons
     this.keys = this.input.keyboard.addKeys(
     {
       switchDown: Phaser.KeyCode.G,
       switchUp: Phaser.KeyCode.T
     });
+    this.keys.switchDown.onDown.add(
+      () =>
+      {
+        this.switchPlane(true);
+      }
+      , this);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -84,10 +70,6 @@ CookieNoir.GameParallax.prototype =
   },
   update: function ()
   {
-    if (this.keys.switchDown.isDown)
-    {
-      this.switchPlane(true);
-    }
 
     this.movePlayer();
 
@@ -114,7 +96,7 @@ CookieNoir.GameParallax.prototype =
   movePlayer: function()
   {
 
-    let upperBound = this.game.cache.getImage(this.currentLayer).width;
+    let upperBound = this.platform0.width;
     let lowerbound = 0;
 
     // movement
@@ -124,18 +106,13 @@ CookieNoir.GameParallax.prototype =
         let newItemPos = item.position.x - 6;
         if ((Math.abs(newItemPos) + this.world.width) <= upperBound) {
           item.position.x = newItemPos;
-          this.middle1.forEach(function(item) {
+          this.middle.forEach(function(item) {
             item.position.x -= 6;
-          });
-          this.hidden.forEach(function(item) {
-            item.position.x -= 5;
           });
           this.bgTile0.tilePosition.x -= 4;
           this.bgTile1.tilePosition.x -= 5;
         }
-
       });
-      // this.player.body.velocity.x = -250;
     }
     else if (this.cursors.left.isDown) {
 
@@ -144,37 +121,42 @@ CookieNoir.GameParallax.prototype =
           let newItemPos = item.position.x + 6;
           if (newItemPos <= lowerbound) {
             item.position.x += 6;
-            this.middle1.forEach(function(item) {
+            this.middle.forEach(function(item) {
               item.position.x += 6;
-            });
-            this.hidden.forEach(function(item) {
-              item.position.x += 5;
             });
             this.bgTile0.tilePosition.x += 4;
             this.bgTile1.tilePosition.x += 5;
           }
         });
-      // this.player.body.velocity.x = 250;
     }
   },
   switchPlane: function(up){
     if(up){
-      this.fadePlane();
-      this.foreground.add(this.layerArray[this.currentLayer+1]);
-      this.middle1.remove(this.layerArray[this.currentLayer+1]);
-      this.middle1.add(this.layerArray[this.currentLayer+2]);
-      this.middle2.remove(this.layerArray[this.currentLayer+2]);
-      this.middle2.add(this.layerArray[this.currentLayer+3]);
-      this.hidden.remove(this.layerArray[this.currentLayer+3]);
+      this.fadePlane(this.platform0, this.platform1);
+      //this.foreground.add(this.platform1);
+      //this.middle.remove(this.platform1);
+      //TODO add new from JSON
+      //this.middle.add();
+
     } else if(!up && currentLayer > 0){
 
     }
   },
-  fadePlane: function(){
-    this.add.tween(this.layerArray[this.currentLayer]).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, true);
-    this.add.tween(this.layerArray[this.currentLayer+1]).to({scaleX: 1, scaleY: 1}, 2000, Phaser.Easing.Linear.None, true);
-    this.add.tween(this.layerArray[this.currentLayer+1]).to({y: 160}, 2000, Phaser.Easing.Linear.None, true);
-    this.add.tween(this.layerArray[this.currentLayer+2]).to({scaleX: 0.7, scaleY: 0.7}, 2000, Phaser.Easing.Linear.None, true);
-    this.add.tween(this.layerArray[this.currentLayer+2]).to({y: 00}, 2000, Phaser.Easing.Linear.None, true);
+  fadePlane: function(out, down){
+     // create new movement tween {properties}, duration, easing function, autostart, delay, repeat_number, yoyo (play back and forth)
+    let tweenOut = this.add.tween(out).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, true);
+        tweenOut.onComplete.add(
+          () =>
+          {
+            this.foreground.add(down);
+            this.middle.remove(down);
+            //TODO add new from JSON
+            //this.middle.add();
+            out.destroy();
+          },this);
+    this.add.tween(this.platform1).to({y: this.world.height}, 1000, Phaser.Easing.Linear.None, true);
+    this.add.tween(this.platform1.scale).to({x: 1.0, y: 1.0}, 1000, Phaser.Easing.Linear.None, true);
+
+    // scaleX: 1, scaleY: 1
   }
 };
