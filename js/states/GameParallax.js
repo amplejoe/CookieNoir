@@ -39,6 +39,6 @@ CookieNoir.GameParallax.prototype =
   render: function ()
   {
     // debug text output
-    this.game.debug.text("Player Game.", 5, this.world.height - 10);
+    this.game.debug.text("Player Game.", 5, 32);
   }
 };

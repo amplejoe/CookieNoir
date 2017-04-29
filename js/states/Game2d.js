@@ -42,6 +42,6 @@ CookieNoir.Game2d.prototype =
   render: function ()
   {
     // debug text output
-    this.game.debug.text("Observer Game.", 5, this.world.height - 10);
+    this.game.debug.text("Observer Game.", 5, 32);
   }
 };
