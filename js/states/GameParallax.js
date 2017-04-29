@@ -13,6 +13,8 @@ CookieNoir.GameParallax = function (game)
   // buttons
   this.cursors;
 
+  this.currentLayer;
+
   this.observerClient;
 };
 
@@ -25,7 +27,7 @@ CookieNoir.GameParallax.prototype =
     this.observerClient = new CookieNoir.Client(
       CookieNoir.SERVER_ADDRESS, CookieNoir.SERVER_PORT, CookieNoir.CLIENT_TYPE.PLAYER);
     this.observerClient.connect();
-    this.currentLayer = 0;
+    this.currentLayer = 'layer0';
     this.hidden = this.game.add.group();
     this.background = this.game.add.group();
     this.middle2 = this.game.add.group();
@@ -46,7 +48,7 @@ CookieNoir.GameParallax.prototype =
     //this.layer2 = this.add.tileSprite(0, 160,this.world.width, this.game.cache.getImage('layer2').height, 'layer2');
     //this.layer3 = this.add.tileSprite(0, 160,this.world.width, this.game.cache.getImage('layer3').height, 'layer3');
     //this.layer4 = this.add.tileSprite(0, 160,this.world.width, this.game.cache.getImage('layer4').height, 'layer4');
-    this.world.setBounds(0, 0, this.layer1.width, 600);
+    //this.world.setBounds(0, 0, this.layer1.width, 600);
 
     this.layer1.scale.setTo(0.7, 0.7);
     //this.layer2.tileScale.setTo(0.5, 0.5);
@@ -80,51 +82,60 @@ CookieNoir.GameParallax.prototype =
     {
       this.switchPlane(true);
     }
-    // movement
-    if (this.cursors.right.isDown)
-    {
-          this.foreground.forEach(function(item){
-            item.position.x -= 6;
-            console.log(item.position.x);
-          });
-          this.middle1.forEach(function(item){
-            item.position.x -= 6;
-          });
-          this.middle2.forEach(function(item){
-            item.position.x -= 7;
-          });
-          this.hidden.forEach(function(item){
-            item.position.x -= 5;
-          });
-          this.bgTile0.tilePosition.x -= 4;
-          this.bgTile1.tilePosition.x -= 5;
-        // this.player.body.velocity.x = -250;
-    }
-    else if (this.cursors.left.isDown)
-    {
 
-          this.foreground.forEach(function(item){
-            item.position.x += 6;
-          });
-          this.middle1.forEach(function(item){
-            item.position.x += 6;
-          });
-          this.middle2.forEach(function(item){
-            item.position.x += 7;
-          });
-          this.hidden.forEach(function(item){
-            item.position.x += 5;
-          });
-          this.bgTile0.tilePosition.x += 4;
-          this.bgTile1.tilePosition.x += 5;
-        // this.player.body.velocity.x = 250;
-    }
+    this.movePlayer();
 
   },
   render: function ()
   {
     // debug text output
     this.game.debug.text("Player Game.", 5, 32);
+  },
+  movePlayer: function()
+  {
+
+    let upperBound = this.game.cache.getImage(this.currentLayer).width;
+    let lowerbound = 0;
+
+    // movement
+    if (this.cursors.right.isDown) {
+      this.foreground.forEach((item) => {
+
+        let newItemPos = item.position.x - 6;
+        if ((Math.abs(newItemPos) + this.world.width) <= upperBound) {
+          item.position.x = newItemPos;
+          this.middle1.forEach(function(item) {
+            item.position.x -= 6;
+          });
+          this.hidden.forEach(function(item) {
+            item.position.x -= 5;
+          });
+          this.bgTile0.tilePosition.x -= 4;
+          this.bgTile1.tilePosition.x -= 5;
+        }
+
+      });
+      // this.player.body.velocity.x = -250;
+    }
+    else if (this.cursors.left.isDown) {
+
+        this.foreground.forEach((item) => {
+
+          let newItemPos = item.position.x + 6;
+          if (newItemPos <= lowerbound) {
+            item.position.x += 6;
+            this.middle1.forEach(function(item) {
+              item.position.x += 6;
+            });
+            this.hidden.forEach(function(item) {
+              item.position.x += 5;
+            });
+            this.bgTile0.tilePosition.x += 4;
+            this.bgTile1.tilePosition.x += 5;
+          }
+        });
+      // this.player.body.velocity.x = 250;
+    }
   },
   switchPlane: function(up){
     if(up){
