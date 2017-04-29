@@ -9,6 +9,15 @@ window.onload = function()
     CookieNoir.phasergame.state.add('Title', CookieNoir.Title);
     CookieNoir.phasergame.state.add('Game', CookieNoir.Game);
 
+    // communication
+    // INFO: need to start server first via startserver.sh
+    // CookieNoir.player = new CookieNoir.Client(
+    //   CookieNoir.SERVER_ADDRESS, CookieNoir.SERVER_PORT, CookieNoir.CLIENT_TYPE.PLAYER);
+    // CookieNoir.observer = new CookieNoir.Client(
+    //   CookieNoir.SERVER_ADDRESS, CookieNoir.SERVER_PORT, CookieNoir.CLIENT_TYPE.OBSERVER);
+    // CookieNoir.player.connect();
+    // CookieNoir.observer.connect();
+
     // start Title state
     CookieNoir.phasergame.state.start('Boot');
 };
