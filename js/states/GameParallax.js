@@ -1,14 +1,13 @@
 
-CookieNoir.Game = function (game)
+CookieNoir.GameParallax = function (game)
 {
   /* members */
-
   // buttons
   this.cursors;
 
 };
 
-CookieNoir.Game.prototype =
+CookieNoir.GameParallax.prototype =
 {
   create: function ()
   {

@@ -26,6 +26,11 @@ CookieNoir.Load.prototype =
     // assets
     this.load.image('logo', 'assets/sprites/phaser.png');
 
+    this.load.image('gameover-bg', 'assets/sprites/end.png');
+
+    this.load.image('btnPlayer2d', 'assets/sprites/map.png');
+    this.load.image('btnPlayerParallax', 'assets/sprites/parallax.png');
+
   },
   loadUpdate: function()
   {
