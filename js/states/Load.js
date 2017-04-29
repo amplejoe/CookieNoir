@@ -46,7 +46,20 @@ CookieNoir.Load.prototype =
   },
   create: function()
   {
+
+    let map1 = this.generateMap();
+
+
     // start Title state
     this.state.start('GameParallax');
+  },
+  generateMap: function()
+  {
+    let map = null;
+
+
+
+    return map;
   }
+
 };
