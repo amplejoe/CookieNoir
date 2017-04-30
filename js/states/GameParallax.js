@@ -182,18 +182,12 @@ CookieNoir.GameParallax.prototype =
           this.width = this.game.cache.getImage(this.platformKey).width;
           // this.bgTile0.loadTexture(this.platformKey);
 
-          this.fadePlane(this.platform1, this.bgTile0);
-          this.fadePlane(this.platform0, this.platform1);
-          this.fadePlaneInTop(this.background, this.platformKey);
-          // load new background image
-          // setTimeout(() => {
-          //   this.bgTile0 = this.make.sprite(this.world.centerX, this.world.height, this.platformKey);
-          //   this.bgTile0.scale.setTo(0.6,0.6);
-          //   this.bgTile0.anchor.setTo(0.5,1.0);
-          //   this.bgTile0.position.y -= 200;
-          //   this.background.add(this.bgTile0);
-          // }, 1100);
+          this.fadePlaneOutUp(this.platform0, this.platform1);
+          this.fadePlaneOutUp(this.platform1, this.bgTile0);
+          this.fadePlaneInUp(this.background, this.platformKey);
+          this.currentLayer = this.platform0;
 
+          setTimeout(this.fixGroupOrder(), 1000);
 
           break;
         }
@@ -216,10 +210,17 @@ CookieNoir.GameParallax.prototype =
             break;
           }
         }
-
+        this.fadePlaneOutDown(this.bgTile0, this.platform1);
+        this.fadePlaneOutDown(this.platform1, this.platform0);
+        this.fadePlaneInDown(this.foreground, 'layer0');
     }
   },
-  fadePlaneInTop: function(g, key) {
+  fixGroupOrder: function() {
+    this.bgTile0.bringToTop();
+    this.platform1.bringToTop();
+    this.platform0.bringToTop();
+  },
+  fadePlaneInUp: function(g, key) {
     let newBg = this.make.sprite(this.world.centerX, this.world.height, key);
     newBg.scale.setTo(0.6,0.6);
     newBg.anchor.setTo(0.5,1.0);
@@ -228,28 +229,40 @@ CookieNoir.GameParallax.prototype =
     g.add(newBg);
     let tweenIn = this.add.tween(newBg).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, true);
     tweenIn.onComplete.add(() => {
-
       this.bgTile0 = newBg;
     }, this);
 
   },
-  fadePlane: function(out, down) {
+  fadePlaneInDown: function(g, key) {
+    // this.platform0
+    let newIn = this.make.sprite(this.world.centerX, this.world.height, key);
+    // debugger;
+    newIn.anchor.setTo(0.5,1.0);
+    newIn.position.y = this.world.height + 200;
+    newIn.alpha = 0;
+    g.add(newIn);
+
+    this.add.tween(newIn).to({ y: this.world.height}, 500, Phaser.Easing.Linear.None, true);
+    let tweenIn = this.add.tween(newIn).to({alpha: 1}, 500, Phaser.Easing.Linear.None, true, true);
+    tweenIn.onComplete.add(() => {
+      this.currentLayer = newIn;
+    }, this);
+
+  },
+  fadePlaneOutUp: function(out, down) {
     // create new movement tween {properties}, duration, easing function, autostart, delay, repeat_number, yoyo (play back and forth)
     let scale = out.scale;
     let posY = out.position.y;
 
-
     let tweenDown = this.add.tween(down).to({ y: posY }, 1000, Phaser.Easing.Linear.None, true);
     this.add.tween(down.scale).to(scale, 1000, Phaser.Easing.Linear.None, true);
     tweenDown.onComplete.add(() => {
-      down.parent.remove(down);
-      out.parent.add(down);
+
+      // out = down;
     }, this);
 
     // change group
-
     if (out == this.currentLayer) {
-      this.currentLayer = down;
       this.add.tween(out).to({ y: this.world.height}, 2000, Phaser.Easing.Linear.None, true);
       let tweenOut = this.add.tween(out).to({alpha: 0}, 1000, Phaser.Easing.Linear.None, true, true);
       tweenOut.onComplete.add(() => {
@@ -257,16 +270,58 @@ CookieNoir.GameParallax.prototype =
         // this.middle.remove(down);
         //TODO add new from JSON
         //this.middle.add();
-        out.parent.remove(out);
-        out.destroy();
+        // out.parent.remove(out);
+        // out.destroy();
+        // out = down;
       }, this);
     }
+    down.parent.remove(down);
+    out.parent.add(down);
+    out = down;
 
-    //  else {
-    //    this.add.tween(out).to({y: out.position.y + 100}, 1500, Phaser.Easing.Linear.None, true);
-    //    this.add.tween(down.scale).to({x: 1.0, y: 1.0}, 1000, Phaser.Easing.Linear.None, true);
-    //  }
+  },
+  fadePlaneOutDown: function(out, up) {
 
-    // scaleX: 1, scaleY: 1
+    // let tweenDown = this.add.tween(up).to({ y: posY }, 1000, Phaser.Easing.Linear.None, true);
+    // this.add.tween(up.scale).to(scale, 1000, Phaser.Easing.Linear.None, true);
+    // tweenDown.onComplete.add(() => {
+    //
+    // }, this);
+
+    if (out.parent == this.background) {
+      this.add.tween(out).to({ y: this.world.height + 100}, 2000, Phaser.Easing.Linear.None, true);
+      let tweenOut = this.add.tween(out).to({alpha: 0}, 1000, Phaser.Easing.Linear.None, true, true);
+      tweenOut.onComplete.add(() => {
+        // this.foreground.add(down);
+        // this.middle.remove(down);
+        //TODO add new from JSON
+        //this.middle.add();
+        this.background.remove(out);
+        this.background.add(up);
+        this.middle.remove(up);
+        this.bgTile0 = up;
+      }, this);
+    } else if (out.parent == this.middle) {
+      let tweenOut = this.add.tween(out).to({ y: 500}, 2000, Phaser.Easing.Linear.None, true);
+      this.add.tween(out.scale).to(0.6, 1000, Phaser.Easing.Linear.None, true);
+      tweenOut.onComplete.add(() => {
+        this.middle.remove(out);
+        this.middle.add(up);
+        this.background.add(up);
+        this.middle.remove(up);
+        this.platform1 = up;
+      }, this);
+    } else {
+      let tweenOut = this.add.tween(out).to({ y: 600}, 2000, Phaser.Easing.Linear.None, true);
+      this.add.tween(out.scale).to(0.8, 1000, Phaser.Easing.Linear.None, true);
+      tweenOut.onComplete.add(() => {
+        this.foreground.remove(out);
+        this.foreground.add(up);
+        this.middle.add(up);
+        this.foreground.remove(up);
+        this.platform1 = up;
+      }, this);
+    }
   }
+
 };
