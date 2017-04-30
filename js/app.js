@@ -6,6 +6,7 @@ window.onload = function()
     // add states
     CookieNoir.phasergame.state.add('Boot', CookieNoir.Boot);
     CookieNoir.phasergame.state.add('Load', CookieNoir.Load);
+    CookieNoir.phasergame.state.add('Intro', CookieNoir.Intro);
     CookieNoir.phasergame.state.add('Title', CookieNoir.Title);
     CookieNoir.phasergame.state.add('Game2d', CookieNoir.Game2d);
     CookieNoir.phasergame.state.add('GameParallax', CookieNoir.GameParallax);
