@@ -109,8 +109,8 @@ CookieNoir.Client.prototype =
           let phaserState = CookieNoir.phasergame.state.getCurrentState();
           phaserState.isGameRunning = false;
           //TODO: uncomment for production game functionality
-          //phaserState.state.start("Credit");}
-        );
+          //phaserState.state.start("Credit");
+        });
 
 
         //phaserState.state.start("Credit");
