@@ -63,6 +63,9 @@ CookieNoir.Load.prototype =
       }
     };
 
+    this.load.image('pf_1_1_0', 'assets/sprites/1_1_0.png');
+    this.load.image('pf_1_1_1', 'assets/sprites/1_1_1.png');
+
     this.load.image('btn-clue', 'assets/sprites/popups/btn-clue.png');
     this.load.image('close', 'assets/sprites/popups/btn-close.png');
     this.load.image('popup-cigarett', 'assets/sprites/popups/popup-cigarett.png');

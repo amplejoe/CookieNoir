@@ -27,20 +27,20 @@ CookieNoir.level1 = {
     "file": "0_1.png",
     "connections": [{
       "pfkey": "pf_1_1",
-      "posX": 0.25
+      "posX": -700
     }, {
       "pfkey": "pf_1_1",
-      "posX": 0.75
+      "posX": 1800
     }]
   },
   "pf_1_1": {
     "file": "1_1.png",
     "connections": [{
         "pfkey": "pf_2_1",
-        "posX": 0.0
+        "posX": -1100
       }, {
         "pfkey": "pf_2_2",
-        "posX": 0.75
+        "posX": 1600
       }, {
         "pfkey": "pf_0_1",
         "posX": 0.75
