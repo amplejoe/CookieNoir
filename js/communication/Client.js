@@ -22,13 +22,17 @@ CookieNoir.Client.prototype =
     this.webSock.onerror = function(evt) { console.log("webSocket error " + evt.data); };
     this.webSock.onmessage = this.collaborationMessage;
   },
-  sendCollaborationInfo: function(cMsg)
+  sendMessage: function(cMsg)
   {
-    //collaboration: send infos to server
+    // send infos to server
     if (this.webSock != null && this.webSock.readyState == 1) {
         this.webSock.send(JSON.stringify(cMsg));
         //console.log(cMsg);
     }
+  },
+  requestGameInfo: function()
+  {
+    this.sendMessage("gaminfo");
   },
   collaborationMessage: function(evt)
   {
@@ -41,9 +45,32 @@ CookieNoir.Client.prototype =
           console.log(cMsg.clientType + " ID: " + myClientId);
 
       }
+      else if (cMsg.type == "initgame")
+      {
+        console.log("Game starting in " + cMsg.remaining);
+      }
+      else if (cMsg.type == "gamestart")
+      {
+        console.log("Game started!");
+      }
       else if (cMsg.type == "playerexists")
       {
           console.log("Connection refused: A player is already connected! (current player ID: "+cMsg.playerID+"))");
+      }
+      else if (cMsg.type == "gamestopped")
+      {
+        console.log("Game ended after, total Duration: " + cMsg.time);
+      }
+      else if (cMsg.type == "gameinfo")
+      {
+        console.log("Game Info: ");
+        let observerString = "";
+        for (let i=0;i<cMsg.observerIds.length;i++)
+        {
+          observerString += cMsg.observerIds[i] + " ";
+        }
+        console.log("Player ID " + cMsg.playerID + ", Observer IDs " +
+          observerString + ", Game Time " + cMsg.gameTime +"/" + cMsg.totalTime);
       }
       else
       {
