@@ -49,7 +49,7 @@ CookieNoir.level1 = {
   },
   "pf_2_1": {
     "file": "2_1.png",
-    "neighbors": [{
+    "connections": [{
       "pfkey": "pf_3_1",
       "posX": 0.0
     }, {
@@ -62,7 +62,7 @@ CookieNoir.level1 = {
   },
   "pf_2_2": {
     "file": "2_2.png",
-    "neighbors": [{
+    "connections": [{
       "pfkey": "pf_4_2",
       "posX": 0.5
     }, {
@@ -76,7 +76,7 @@ CookieNoir.level1 = {
   },
   "pf_3_1": {
     "file": "3_1.png",
-    "neighbors": [{
+    "connections": [{
       "pfkey": "pf_4_1",
       "posX": 0.5
     }, {
@@ -90,7 +90,7 @@ CookieNoir.level1 = {
   },
   "pf_3_2": {
     "file": "3_2.png",
-    "neighbors": [{
+    "connections": [{
       "pfkey": "pf_4_1",
       "posX": 0.5
     }, {
@@ -104,7 +104,7 @@ CookieNoir.level1 = {
   },
   "pf_4_1": {
     "file": "4_1.png",
-    "neighbors": [{
+    "connections": [{
       "pfkey": "pf_5_1",
       "posX": 0.5
     }, {
@@ -117,7 +117,7 @@ CookieNoir.level1 = {
   },
   "pf_4_2": {
     "file": "4_2.png",
-    "neighbors": [{
+    "connections": [{
       "pfkey": "pf_5_2",
       "posX": 0.5
     }, {
@@ -127,7 +127,7 @@ CookieNoir.level1 = {
   },
   "pf_5_1": {
     "file": "5_1.png",
-    "neighbors": [{
+    "connections": [{
       "pfkey": "pf_6_1",
       "posX": 1.0
     }, {
@@ -141,7 +141,7 @@ CookieNoir.level1 = {
   },
   "pf_5_2": {
     "file": "5_2.png",
-    "neighbors": [{
+    "connections": [{
       "pfkey": "pf_6_1",
       "posX": 1.0
     }, {
@@ -151,7 +151,7 @@ CookieNoir.level1 = {
   },
   "pf_6_1": {
     "file": "6_1.png",
-    "neighbors": [{
+    "connections": [{
       "pfkey": "pf_5_1",
       "posX": 0.0
     }, {

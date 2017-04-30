@@ -39,6 +39,14 @@ CookieNoir.Load.prototype =
     this.load.image('layer2', 'assets/sprites/layer2.png');
     this.load.image('layer3', 'assets/sprites/layer3.png');
     this.load.image('layer4', 'assets/sprites/layer4.png');
+
+    // load background images of all platforms
+    for (let key in CookieNoir.level1) {
+      if (key !== undefined) {
+        this.load.image(key, 'assets/sprites/' + CookieNoir.level1[key].file);
+      }
+    };
+
   },
   loadUpdate: function()
   {
@@ -51,7 +59,7 @@ CookieNoir.Load.prototype =
 
 
     // start Title state
-    this.state.start('Title');
+    this.state.start('GameParallax');
   },
   generateMap: function()
   {
