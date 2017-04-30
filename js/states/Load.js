@@ -40,6 +40,12 @@ CookieNoir.Load.prototype =
     this.load.image('layer3', 'assets/sprites/layer3.png');
     this.load.image('layer4', 'assets/sprites/layer4.png');
 
+    // map
+    this.load.tilemap('level_map_topdown', 'assets/sprites/map/46/map.json', null, Phaser.Tilemap.TILED_JSON);
+    // (DONT use padded sprites - creates phaser warning: Phaser.Tileset - image tile area is not an even multiple of tile size)
+    this.load.atlasXML('tiles', 'assets/sprites/map/46/sprites.png', 'assets/sprites/map/46/sprites.xml');
+    this.load.image('simple_map', 'assets/sprites/map/map_simple.png');
+
     // load background images of all platforms
     for (let key in CookieNoir.level1) {
       if (key !== undefined) {
@@ -59,7 +65,7 @@ CookieNoir.Load.prototype =
 
 
     // start Title state
-    this.state.start('GameParallax');
+    this.state.start('Title');
   },
   generateMap: function()
   {
