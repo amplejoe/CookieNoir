@@ -98,6 +98,6 @@ CookieNoir.Game2d.prototype = {
   },
   render: function() {
     // debug text output
-    this.game.debug.text("Observer Game (game running: "+this.isGameRunning+")", 5, 32);
+    // this.game.debug.text("Observer Game (game running: "+this.isGameRunning+")", 5, 32);
   }
 };

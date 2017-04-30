@@ -87,15 +87,17 @@ CookieNoir.GameParallax.prototype =
       switchDown: Phaser.KeyCode.G,
       switchUp: Phaser.KeyCode.T
     });
-    this.keys.switchDown.onDown.add(() => {
-      this.switchPlane(false);
-    }, this);
 
-    this.keys.switchUp.onDown.add(() => {
+    this.cursors = this.input.keyboard.createCursorKeys();
+
+    this.cursors.up.onDown.add(() => {
       this.switchPlane(true);
     }, this);
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    // this.cursors.down.onDown.add(() => {
+    //   this.switchPlane(false);
+    // }, this);
+
 
     this.calcDirections();
     // text for direction indication
@@ -123,7 +125,7 @@ CookieNoir.GameParallax.prototype =
   render: function ()
   {
     // debug text output
-    this.game.debug.text("Player Game.", 5, 32);
+    // this.game.debug.text("Player Game.", 5, 32);
   },
   setDirectionArrow: function(direction, pos)
   {
@@ -194,12 +196,13 @@ CookieNoir.GameParallax.prototype =
         let relpos = this.playerPos * 1.5;
         console.log(relpos + "/" + posX);
         if (posX > relpos - 100 && posX < relpos + 100 && con.pfkey.split("_")[1] > this.platformKey.split("_")[1]) {
-          this.platformKey = con.pfkey;
-          this.platformJSON = CookieNoir.level1[this.platformKey];
+          if (this.cout = 2) {
+            this.platformKey = con.pfkey;
+            this.platformJSON = CookieNoir.level1[this.platformKey];
+          }
           // this.playerPos = this.game.cache.getImage(this.platformKey).width / 2;
           this.width = this.game.cache.getImage(this.platformKey).width;
           // this.bgTile0.loadTexture(this.platformKey);
-
           this.fadePlaneOutUp(this.platform0, this.platform1);
           this.fadePlaneOutUp(this.platform1, this.bgTile0);
           this.fadePlaneInUp(this.background, this.platformKey, relpos);
@@ -222,7 +225,9 @@ CookieNoir.GameParallax.prototype =
           let posX = con.posX;
           let relpos = this.playerPos / this.width;
           if (posX > relpos - 0.1 && posX < relpos + 0.1 && con.pfkey.split("_")[1] < this.platformKey.split("_")[1]) {
-            this.platformKey = con.pfkey;
+            if (this.cout = 2) {
+              this.platformKey = con.pfkey;
+            }
             this.platformJSON = CookieNoir.level1[this.platformKey];
             this.playerPos = this.world.width / 2;
             this.width = this.game.cache.getImage(this.platformKey).width;
@@ -247,6 +252,7 @@ CookieNoir.GameParallax.prototype =
     } else {
       this.count = 0;
     }
+    debugger;
     let newBg = this.make.sprite(this.world.centerX, this.world.height, key);
     newBg.scale.setTo(0.6,0.6);
     newBg.anchor.setTo(0.5,1.0);
