@@ -180,7 +180,14 @@ wsServer.on('request', function(request)
           allConnections.push(dictEntry);
           sendMessage({type: 'init', clientId: dictEntry.id, clientType: dictEntry.type}, connection);
           let num_participants =  allConnections.length;
-          if (num_participants < 2) console.log((new Date()) + ': Waiting for second participant.');
+          if (playerIdx < 0)
+          {
+            console.log((new Date()) + ': Waiting for player.');
+          }
+          else if (num_participants < 2)
+          {
+            console.log((new Date()) + ': Waiting for observer.');
+          }
           else initGame();
         }
         else

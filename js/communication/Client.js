@@ -6,7 +6,7 @@ CookieNoir.Client = function(address, port, type)
   this.webSock;
 
   this.infoTextStyle = { font: '40pt TheMinion', fill: 'white', align: 'center', stroke: 'rgba(255,255,255,1.0)', strokeThickness: 4};
-
+  this.currentPermaText = null;
   // TODO: pass reference of state into constructor
   // -> for now global CookieNoir.phasergame is used for client outputs
   //this.currentState = state;
@@ -40,16 +40,28 @@ CookieNoir.Client.prototype =
   {
     this.sendMessage("gaminfo");
   },
-  printPhaserMessage: function(text,duration)
+  createPhaserMessage: function(text, duration, repeat, yoyo)
   {
     let phaserState = CookieNoir.phasergame.state.getCurrentState();
     let infoText = phaserState.add.text(phaserState.world.centerX, phaserState.world.centerY, text, this.infoTextStyle);
     infoText.anchor.setTo(0.5);
     // create new movement tween {properties}, duration, easing function, autostart, delay, repeat_number, yoyo (play back and forth)
-    let tween = phaserState.add.tween(infoText).to({alpha: 0.0}, duration, Phaser.Easing.Linear.None, true, 0);
-    tween.onComplete.add(
-      () =>
-      {infoText.destroy();},this);
+    let tween = phaserState.add.tween(infoText).to({alpha: 0.0}, duration, Phaser.Easing.Linear.None, true, 0, repeat, yoyo);
+    tween.onComplete.add(() => {infoText.destroy();},this);
+    return {text:infoText, tween: tween}; // optional return for keeping reference
+  },
+  removePermaText: function()
+  {
+    let phaserState = CookieNoir.phasergame.state.getCurrentState();
+    this.currentPermaText.tween.stop();
+    // remove tween from game
+    // IMPORTANT: not possible via sprite - always keep a reference
+    phaserState.tweens.remove(this.currentPermaText.tween);
+    // fade out and destroy text
+    let fadeout = phaserState.add.tween(this.currentPermaText.text).to({alpha: 0.0},
+      500, Phaser.Easing.Linear.None, true);
+    fadeout.onComplete.add(() => {this.currentPermaText.text.destroy(); this.currentPermaText = null;},this);
+  
   },
   receiveMessage: function(evt)
   {
@@ -60,14 +72,15 @@ CookieNoir.Client.prototype =
           myClientId = cMsg.clientId;
           let type = "Unknown";
           console.log(cMsg.clientType + " ID: " + myClientId);
-
+          this.currentPermaText = this.createPhaserMessage("Waiting for participant...", 2000, 1000, true);
       }
       else if (cMsg.type == "initgame")
       {
         let msg = "Game starting in " + cMsg.remaining;
         console.log(msg);
+        if (this.currentPermaText != null) this.removePermaText();
         //CookieNoir.phasergame.state.getCurrentState().game.debug.text("Client: " + msg, 5, 64);
-        this.printPhaserMessage(msg, 1400);
+        this.createPhaserMessage(msg, 1400, 0, false);
       }
       else if (cMsg.type == "gamestart")
       {
@@ -80,7 +93,7 @@ CookieNoir.Client.prototype =
       else if (cMsg.type == "gamestopped")
       {
         console.log("Game ended after, total Duration: " + cMsg.time);
-        this.printPhaserMessage("Game Over!\nPlay Time: "+ cMsg.time, 5000);
+        this.createPhaserMessage("Game Over!\nPlay Time: "+ cMsg.time, 5000, 0, false);
       }
       else if (cMsg.type == "gameinfo")
       {

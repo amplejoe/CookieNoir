@@ -5,6 +5,8 @@ CookieNoir.Game2d = function(game) {
   this.cursors;
 
   this.playerClient;
+
+  this.isGameRunning = false;
 };
 
 CookieNoir.Game2d.prototype = {
@@ -19,7 +21,15 @@ CookieNoir.Game2d.prototype = {
     // buttons
     this.cursors = this.input.keyboard.createCursorKeys();
   },
+  startGame: function()
+  {
+    let dummymap = this.add.sprite(this.world.centerX,this.world.centerY, 'map');
+    dummymap.anchor.setTo(0.5);
+    this.isGameRunning = true;
+  },
   update: function() {
+
+    if (!this.isGameRunning) return;
 
     // movement
     if (this.cursors.left.isDown) {
@@ -31,6 +41,6 @@ CookieNoir.Game2d.prototype = {
   },
   render: function() {
     // debug text output
-    this.game.debug.text("Observer Game.", 5, 32);
+    this.game.debug.text("Observer Game (game running: "+this.isGameRunning+" )", 5, 32);
   }
 };
