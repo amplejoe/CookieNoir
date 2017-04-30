@@ -210,6 +210,10 @@ wsServer.on('request', function(request)
         sendMessage({type:'gameinfo', playerID: playerIdx, observerIds: observerIds,
                 gameTime: gameTime, totalTime: msToTime(config.game_duration_ms) });
       }
+      else if (cMsg.type == "placeEnemy")
+      {
+        broadcast({type:"placeEnemy", position: cMsg.position});
+      }
       else
       {
         console.log((new Date()) + ": Forwarding message from " + connection.remoteAddress + ": " + cMsgStr);
@@ -218,7 +222,7 @@ wsServer.on('request', function(request)
         {
           forward(cMsgStr);
         }
-        forwardSpectators(cMsgStr)
+        //forwardSpectators(cMsgStr)
         if (cMsg.type == "position")
         {
           setTimeout(handleMapPosition, 0, cMsg);

@@ -45,7 +45,7 @@ CookieNoir.Load.prototype =
     this.load.tilemap('level_map_topdown', 'assets/sprites/map/46/map.json', null, Phaser.Tilemap.TILED_JSON);
     // (DONT use padded sprites - creates phaser warning: Phaser.Tileset - image tile area is not an even multiple of tile size)
     this.load.atlasXML('tiles', 'assets/sprites/map/46/sprites.png', 'assets/sprites/map/46/sprites.xml');
-    this.load.image('simple_map', 'assets/sprites/map/map_simple.png');
+    this.load.image('simple_map', 'assets/sprites/map/map.png');
 
     // audio
     // music

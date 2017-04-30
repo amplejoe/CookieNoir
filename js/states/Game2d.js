@@ -7,6 +7,11 @@ CookieNoir.Game2d = function(game) {
   this.playerClient;
 
   this.isGameRunning = false;
+
+  this.enemy;
+  this.placedItems = [];
+
+  this.itemKeys = [];
 };
 
 CookieNoir.Game2d.prototype = {
@@ -26,12 +31,11 @@ CookieNoir.Game2d.prototype = {
     let map = this.add.sprite(this.world.centerX - 50,this.world.centerY - 20, 'simple_map');
     map.anchor.setTo(0.5);
     map.smoothed = false;
-    map.scale.setTo(0.65);
+    map.scale.setTo(0.70);
 
     // music (volume 1.0, loop: true)
     this.music = this.add.audio('music', 1.0, true);
     this.music.play();
-
 
     // JSON tilemap
    //  add tilemap to game
@@ -50,12 +54,35 @@ CookieNoir.Game2d.prototype = {
   // var layer = level.createLayer( 'Tile Layer 1',
   //   layerData.width * 256 * 2,    layerData.height * levelData.tileheight * 2,    group);layer.visible = layerData.visible;layer.alpha = layerData.opacity;layer.position.set(layerData.x, layerData.y);layer.scale.set(0.5, 0.5);layer.resizeWorld();
 
+  //this.placeItem('btnPlayer2d', {x: this.world.centerX, y: this.world.centerY});
+  this.playerClient.sendMessage({type:'placeEnemy', position: 'pos'});
 
   //  this.game.scale.setUserScale(0.4, 0.4, 1.0, 0); // use 1.5 for horizontal/vertical scaling factor
 
    //
 
    this.isGameRunning = true;
+  },
+  placeItem: function (spriteKey, position)
+  {
+      let sprite = this.add.sprite(position.x,position.y, spriteKey);
+      sprite.anchor.setTo(0.5);
+      this.placedItems.push({key: spriteKey, sprite: sprite});
+  },
+  removeAllItems: function()
+  {
+    for (let i = 0;i<this.placedItems.length; i++)
+    {
+      this.placedItems[i].sprite.destroy();
+    }
+    this.placedItems = [];
+  },
+  placeEnemy: function (spriteKey, position)
+  {
+      if (this.enemy) this.enemy.sprite.destroy();
+      let sprite = this.add.sprite(position.x,position.y, spriteKey);
+      sprite.anchor.setTo(0.5);
+      this.enemy = {key: spriteKey, sprite: sprite};
   },
   update: function() {
 
