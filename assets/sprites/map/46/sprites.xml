@@ -1,0 +1,13 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="roadEW.tga" x="46" y="46" width="46" height="46"/>
+	<SubTexture name="roadNE.tga" x="92" y="46" width="46" height="46"/>
+	<SubTexture name="roadNEWS.tga" x="92" y="0" width="46" height="46"/>
+	<SubTexture name="roadNS.tga" x="46" y="138" width="46" height="46"/>
+	<SubTexture name="roadNW.tga" x="46" y="92" width="46" height="46"/>
+	<SubTexture name="roadSE.tga" x="92" y="92" width="46" height="46"/>
+	<SubTexture name="roadSW.tga" x="46" y="0" width="46" height="46"/>
+	<SubTexture name="roadTE.tga" x="0" y="138" width="46" height="46"/>
+	<SubTexture name="roadTN.tga" x="0" y="92" width="46" height="46"/>
+	<SubTexture name="roadTS.tga" x="0" y="46" width="46" height="46"/>
+	<SubTexture name="roadTW.tga" x="0" y="0" width="46" height="46"/>
+</TextureAtlas>

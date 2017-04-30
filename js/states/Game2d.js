@@ -23,9 +23,39 @@ CookieNoir.Game2d.prototype = {
   },
   startGame: function()
   {
-    let dummymap = this.add.sprite(this.world.centerX,this.world.centerY, 'btnPlayer2d');
-    dummymap.anchor.setTo(0.5);
-    this.isGameRunning = true;
+    let map = this.add.sprite(this.world.centerX - 50,this.world.centerY - 20, 'simple_map');
+    map.anchor.setTo(0.5);
+    map.smoothed = false;
+    map.scale.setTo(0.65);
+
+    // music (volume 1.0, loop: true)
+    this.music = this.add.audio('music', 1.0, true);
+    this.music.play();
+
+
+    // JSON tilemap
+   //  add tilemap to game
+  //  let map = this.add.tilemap('level_map_topdown');
+  //  map.addTilesetImage('sprites', 'tiles');
+  //  let layer = map.createLayer('Tile Layer 1');
+  // layer.resizeWorld();
+
+  //  this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+  // this.world.scale.x  = 0.3;
+  // this.world.scale.y  = 0.3;
+
+  //layer.scale = {x:0.2, y:0.2};
+  //layer.debug = true;
+
+  // var layer = level.createLayer( 'Tile Layer 1',
+  //   layerData.width * 256 * 2,    layerData.height * levelData.tileheight * 2,    group);layer.visible = layerData.visible;layer.alpha = layerData.opacity;layer.position.set(layerData.x, layerData.y);layer.scale.set(0.5, 0.5);layer.resizeWorld();
+
+
+  //  this.game.scale.setUserScale(0.4, 0.4, 1.0, 0); // use 1.5 for horizontal/vertical scaling factor
+
+   //
+
+   this.isGameRunning = true;
   },
   update: function() {
 

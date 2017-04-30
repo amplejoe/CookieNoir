@@ -2,6 +2,7 @@ CookieNoir.Load = function(game)
 {
   // label for displaying loading information
   this.loadingLabel;
+  this.audioKeys;
 };
 
 CookieNoir.Load.prototype =
@@ -40,6 +41,17 @@ CookieNoir.Load.prototype =
     this.load.image('layer3', 'assets/sprites/layer3.png');
     this.load.image('layer4', 'assets/sprites/layer4.png');
 
+    // map
+    this.load.tilemap('level_map_topdown', 'assets/sprites/map/46/map.json', null, Phaser.Tilemap.TILED_JSON);
+    // (DONT use padded sprites - creates phaser warning: Phaser.Tileset - image tile area is not an even multiple of tile size)
+    this.load.atlasXML('tiles', 'assets/sprites/map/46/sprites.png', 'assets/sprites/map/46/sprites.xml');
+    this.load.image('simple_map', 'assets/sprites/map/map_simple.png');
+
+    // audio
+    // music
+    let music = this.load.audio('music', 'assets/audio/noir_1.mp3');
+    this.audioKeys = ['music'];
+
     // load background images of all platforms
     for (let key in CookieNoir.level1) {
       if (key !== undefined) {
@@ -47,6 +59,9 @@ CookieNoir.Load.prototype =
       }
     };
 
+    this.load.image('btn-clue', 'assets/sprites/popups/btn-clue.png');
+    this.load.image('close', 'assets/sprites/popups/btn-close.png');
+    this.load.image('popup-cigarett', 'assets/sprites/popups/popup-cigarett.png');
   },
   loadUpdate: function()
   {
@@ -55,19 +70,17 @@ CookieNoir.Load.prototype =
   create: function()
   {
 
-    let map1 = this.generateMap();
+    // Wait for encoded files to be decoded, if completed start game state (onDecoded)
+    // IMPORTANT: this cannot be done in preload, since it relies on this.audioKeys
+    // existing in the Phaser.Cache, which can only be assured now
+    this.sound.setDecodedCallback(this.audioKeys, this.onDecoded, this);
 
-
-    // start Title state
-    this.state.start('GameParallax');
   },
-  generateMap: function()
+  onDecoded: function()
   {
-    let map = null;
-
-
-
-    return map;
+    // start Title state
+    this.state.start('Title');
   }
+
 
 };
