@@ -2,6 +2,7 @@ CookieNoir.Load = function(game)
 {
   // label for displaying loading information
   this.loadingLabel;
+  this.audioKeys;
 };
 
 CookieNoir.Load.prototype =
@@ -46,6 +47,11 @@ CookieNoir.Load.prototype =
     this.load.atlasXML('tiles', 'assets/sprites/map/46/sprites.png', 'assets/sprites/map/46/sprites.xml');
     this.load.image('simple_map', 'assets/sprites/map/map_simple.png');
 
+    // audio
+    // music
+    let music = this.load.audio('music', 'assets/audio/noir_1.mp3');
+    this.audioKeys = ['music'];
+
     // load background images of all platforms
     for (let key in CookieNoir.level1) {
       if (key !== undefined) {
@@ -64,19 +70,17 @@ CookieNoir.Load.prototype =
   create: function()
   {
 
-    let map1 = this.generateMap();
+    // Wait for encoded files to be decoded, if completed start game state (onDecoded)
+    // IMPORTANT: this cannot be done in preload, since it relies on this.audioKeys
+    // existing in the Phaser.Cache, which can only be assured now
+    this.sound.setDecodedCallback(this.audioKeys, this.onDecoded, this);
 
-
+  },
+  onDecoded: function()
+  {
     // start Title state
     this.state.start('Title');
-  },
-  generateMap: function()
-  {
-    let map = null;
-
-
-
-    return map;
   }
+
 
 };
