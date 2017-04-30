@@ -69,7 +69,7 @@ CookieNoir.Credit.prototype =
   create: function () {
     this.stage.disableVisibilityChange = true;
     let bg = this.add.sprite(0, 0, 'gameover-bg');
-    this.addCredit('Music', ['??']);
+    this.addCredit('Music', ['Peter Hafele']);
 
     this.addCredit('Map-Design & Story', ['Daniela Brus', 'Felix Schniz']);
 
