@@ -38,6 +38,9 @@ CookieNoir.Intro.prototype =
     this.text = this.game.add.text(32, 432, '', { font: "20px TheMinion", fill: "white" });
     // let authorStyle = { font: '30pt TheMinion', fill: 'white', align: 'center', stroke: 'rgba(0,0,0,0)', strokeThickness: 4};
     this.nextLine();
+
+    this.music = this.add.audio('music', 1.0, true);
+    this.music.play();
   },
   nextLine: function() {
 
@@ -64,13 +67,14 @@ CookieNoir.Intro.prototype =
             this.add.tween(this.text).to({alpha: 1}, 2000, Phaser.Easing.Linear.None, true, true);
             this.nextLine();
           }, this);
-          if(this.screenIndex == 3){
-            this.add.tween(this.intro).to({alpha: 0}, 2000, Phaser.Easing.Linear.None, true, true);
-            let tweenOut = this.add.tween(this.text).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, true);
-            tweenOut.onComplete.add(() => {
-                this.state.start('GameParallax');
-            });
-          }
+
+        }
+        if(this.screenIndex == 3){
+          this.add.tween(this.intro).to({alpha: 0}, 2000, Phaser.Easing.Linear.None, true, true);
+          let tweenOut = this.add.tween(this.text).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, true);
+          tweenOut.onComplete.add(() => {
+              this.state.start('GameParallax');
+          });
         }
         //  We're finished
         return;

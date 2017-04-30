@@ -54,7 +54,7 @@ CookieNoir.Title.prototype =
 
     let playerParallax = this.add.button(420, 100, 'btnPlayerParallax', actionOnClick, this, 2, 1, 0);
     playerParallax.scale.setTo(0.25);
-    playerParallax.onInputUp.add(() => {this.state.start('GameParallax')}, this);
+    playerParallax.onInputUp.add(() => {this.state.start('Intro')}, this);
     // playerParallax.onInputOver.add(over, this);
     // playerParallax.onInputOut.add(out, this);
     // playerParallax.onInputUp.add(up, this);

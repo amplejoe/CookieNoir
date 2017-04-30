@@ -52,8 +52,7 @@ CookieNoir.GameParallax.prototype =
   startGame: function() {
       this.isGameRunning = true;
 
-      this.music = this.add.audio('music', 1.0, true);
-      this.music.play();
+
 
     this.background.add(this.add.tileSprite(0,0, this.world.width, this.game.cache.getImage('bg_z-3').height, 'bg_z-3'));
 
@@ -196,7 +195,7 @@ CookieNoir.GameParallax.prototype =
         let relpos = this.playerPos * 1.5;
         console.log(relpos + "/" + posX);
         if (posX > relpos - 100 && posX < relpos + 100 && con.pfkey.split("_")[1] > this.platformKey.split("_")[1]) {
-          if (this.cout = 2) {
+          if (this.count = 2) {
             this.platformKey = con.pfkey;
             this.platformJSON = CookieNoir.level1[this.platformKey];
           }
@@ -225,7 +224,7 @@ CookieNoir.GameParallax.prototype =
           let posX = con.posX;
           let relpos = this.playerPos / this.width;
           if (posX > relpos - 0.1 && posX < relpos + 0.1 && con.pfkey.split("_")[1] < this.platformKey.split("_")[1]) {
-            if (this.cout = 2) {
+            if (this.count = 2) {
               this.platformKey = con.pfkey;
             }
             this.platformJSON = CookieNoir.level1[this.platformKey];
