@@ -10,7 +10,7 @@ CookieNoir.Boot.prototype =
   create: function()
   {
     /** phaser settings **/
-    this.stage.backgroundColor = '#525252';
+    this.stage.backgroundColor = '#000000';
     // ensure sprites are rendered at integer positions:
     // sprites rendered at non-integer (sub-pixel) positions appear blurry,
     // as canvas tries to anti-alias them between the two pixels.
