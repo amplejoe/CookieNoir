@@ -40,14 +40,17 @@ CookieNoir.Client.prototype =
   {
     this.sendMessage("gaminfo");
   },
-  createPhaserMessage: function(text, duration, repeat, yoyo)
+  createPhaserMessage: function(text, duration, repeat, yoyo, callback = null)
   {
     let phaserState = CookieNoir.phasergame.state.getCurrentState();
     let infoText = phaserState.add.text(phaserState.world.centerX, phaserState.world.centerY, text, this.infoTextStyle);
     infoText.anchor.setTo(0.5);
     // create new movement tween {properties}, duration, easing function, autostart, delay, repeat_number, yoyo (play back and forth)
     let tween = phaserState.add.tween(infoText).to({alpha: 0.0}, duration, Phaser.Easing.Linear.None, true, 0, repeat, yoyo);
-    tween.onComplete.add(() => {infoText.destroy();},this);
+    tween.onComplete.add(() => {
+      infoText.destroy();
+      if (callback !== null) callback();
+    },this);
     return {text:infoText, tween: tween}; // optional return for keeping reference
   },
   removePermaText: function()
@@ -61,7 +64,7 @@ CookieNoir.Client.prototype =
     let fadeout = phaserState.add.tween(this.currentPermaText.text).to({alpha: 0.0},
       500, Phaser.Easing.Linear.None, true);
     fadeout.onComplete.add(() => {this.currentPermaText.text.destroy(); this.currentPermaText = null;},this);
-  
+
   },
   receiveMessage: function(evt)
   {
@@ -85,6 +88,14 @@ CookieNoir.Client.prototype =
       else if (cMsg.type == "gamestart")
       {
         console.log("Game started!");
+
+        let phaserState = CookieNoir.phasergame.state.getCurrentState();
+        //TODO: implement in Game Parallax and remove following condition
+        if (phaserState.isGameRunning !== undefined)
+        {
+          phaserState.startGame();
+        }
+
       }
       else if (cMsg.type == "playerexists")
       {
@@ -93,7 +104,16 @@ CookieNoir.Client.prototype =
       else if (cMsg.type == "gamestopped")
       {
         console.log("Game ended after, total Duration: " + cMsg.time);
-        this.createPhaserMessage("Game Over!\nPlay Time: "+ cMsg.time, 5000, 0, false);
+        this.createPhaserMessage("Game Over!\nPlay Time: "+ cMsg.time, 5000, 0, false,
+        () => {
+          let phaserState = CookieNoir.phasergame.state.getCurrentState();
+          phaserState.isGameRunning = false;
+          //TODO: uncomment for production game functionality
+          //phaserState.state.start("Credit");}
+        );
+
+
+        //phaserState.state.start("Credit");
       }
       else if (cMsg.type == "gameinfo")
       {

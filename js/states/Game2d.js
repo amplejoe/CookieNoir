@@ -23,7 +23,7 @@ CookieNoir.Game2d.prototype = {
   },
   startGame: function()
   {
-    let dummymap = this.add.sprite(this.world.centerX,this.world.centerY, 'map');
+    let dummymap = this.add.sprite(this.world.centerX,this.world.centerY, 'btnPlayer2d');
     dummymap.anchor.setTo(0.5);
     this.isGameRunning = true;
   },
@@ -41,6 +41,6 @@ CookieNoir.Game2d.prototype = {
   },
   render: function() {
     // debug text output
-    this.game.debug.text("Observer Game (game running: "+this.isGameRunning+" )", 5, 32);
+    this.game.debug.text("Observer Game (game running: "+this.isGameRunning+")", 5, 32);
   }
 };

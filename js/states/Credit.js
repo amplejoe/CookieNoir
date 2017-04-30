@@ -42,8 +42,8 @@ CookieNoir.Credit.prototype =
   },
 
   addMenuOption: function(text, callback) {
-    let optionStyle = { font: '30pt TheMinion', fill: 'white', align: 'left', stroke: 'rgba(0,0,0,0)', srokeThickness: 4};
-    let txt = this.add.text(10, (this.optionCount * 80) + 450, text, optionStyle);
+    let optionStyle = { font: '30pt Font Awesome', fill: 'white', align: 'left', stroke: 'rgba(0,0,0,0)', srokeThickness: 4};
+    let txt = this.add.text(10, (this.optionCount * 80) + 440, text, optionStyle);
 
     txt.stroke = "rgba(0,0,0,0";
     txt.strokeThickness = 4;
@@ -84,7 +84,7 @@ CookieNoir.Credit.prototype =
     this.addCredit("It's not a bug it a feature ;-)", ['']);
 
 
-    this.addMenuOption('<- Back', function (e) {
+    this.addMenuOption('\uf060 Back', function (e) {
       this.state.start("Title");
     });
     this.add.tween(bg).to({alpha: 0}, 20000, Phaser.Easing.Cubic.Out, true, 10000);
