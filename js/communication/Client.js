@@ -4,6 +4,12 @@ CookieNoir.Client = function(address, port, type)
   this.serverPort = port;
   this.clientType = type;
   this.webSock;
+
+  this.infoTextStyle = { font: '40pt TheMinion', fill: 'white', align: 'center', stroke: 'rgba(255,255,255,1.0)', strokeThickness: 4};
+
+  // TODO: pass reference of state into constructor
+  // -> for now global CookieNoir.phasergame is used for client outputs
+  //this.currentState = state;
 };
 
 CookieNoir.Client.prototype =
@@ -20,7 +26,7 @@ CookieNoir.Client.prototype =
     };
     this.webSock.onclose = function() { console.log("WebSocket closed"); };
     this.webSock.onerror = function(evt) { console.log("webSocket error " + evt.data); };
-    this.webSock.onmessage = this.collaborationMessage;
+    this.webSock.onmessage = (evt) => {this.receiveMessage(evt)};
   },
   sendMessage: function(cMsg)
   {
@@ -34,7 +40,18 @@ CookieNoir.Client.prototype =
   {
     this.sendMessage("gaminfo");
   },
-  collaborationMessage: function(evt)
+  printPhaserMessage: function(text,duration)
+  {
+    let phaserState = CookieNoir.phasergame.state.getCurrentState();
+    let infoText = phaserState.add.text(phaserState.world.centerX, phaserState.world.centerY, text, this.infoTextStyle);
+    infoText.anchor.setTo(0.5);
+    // create new movement tween {properties}, duration, easing function, autostart, delay, repeat_number, yoyo (play back and forth)
+    let tween = phaserState.add.tween(infoText).to({alpha: 0.0}, duration, Phaser.Easing.Linear.None, true, 0);
+    tween.onComplete.add(
+      () =>
+      {infoText.destroy();},this);
+  },
+  receiveMessage: function(evt)
   {
       let cMsg = JSON.parse(evt.data);
 
@@ -47,7 +64,10 @@ CookieNoir.Client.prototype =
       }
       else if (cMsg.type == "initgame")
       {
-        console.log("Game starting in " + cMsg.remaining);
+        let msg = "Game starting in " + cMsg.remaining;
+        console.log(msg);
+        //CookieNoir.phasergame.state.getCurrentState().game.debug.text("Client: " + msg, 5, 64);
+        this.printPhaserMessage(msg, 1400);
       }
       else if (cMsg.type == "gamestart")
       {
@@ -60,6 +80,7 @@ CookieNoir.Client.prototype =
       else if (cMsg.type == "gamestopped")
       {
         console.log("Game ended after, total Duration: " + cMsg.time);
+        this.printPhaserMessage("Game Over!\nPlay Time: "+ cMsg.time, 5000);
       }
       else if (cMsg.type == "gameinfo")
       {
