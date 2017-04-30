@@ -2,5 +2,5 @@
     "serverAddress": "localhost",
     "serverPort": "8080",
     "game_start_timeout_ms": 5000,
-    "game_duration_ms": 300 000
+    "game_duration_ms": 300000
 }
