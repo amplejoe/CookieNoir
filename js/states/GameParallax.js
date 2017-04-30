@@ -24,6 +24,7 @@ CookieNoir.GameParallax = function (game)
 
   this.playerPos;
   this.width;
+  this.count = 0;
 };
 
 CookieNoir.GameParallax.prototype =
@@ -44,6 +45,7 @@ CookieNoir.GameParallax.prototype =
     this.background = this.game.add.group();
     this.middle = this.game.add.group();
     this.foreground = this.game.add.group();
+    this.direction = this.game.add.group();
     this.background.add(this.add.tileSprite(0,0, this.world.width, this.game.cache.getImage('bg_z-3').height, 'bg_z-3'));
 
     // background
@@ -86,18 +88,22 @@ CookieNoir.GameParallax.prototype =
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
+    this.calcDirections();
     // text for direction indication
+
+  },
+  calcDirections: function() {
     // calculation for directionIndicator
     for (let c in this.platformJSON.connections) {
       let con = this.platformJSON.connections[c];
       if (con.pfkey.split("_")[1] > this.platformKey.split("_")[1]) {
-        this.setDirectionArrow(CookieNoir.DirectionIcons.up, this.width * con.posX);
+        this.setDirectionArrow(CookieNoir.DirectionIcons.up, con.posX);
       } else {
-        this.setDirectionArrow(CookieNoir.DirectionIcons.down, this.width * con.posX);
+        this.setDirectionArrow(CookieNoir.DirectionIcons.down, con.posX);
       }
     }
-
   },
+
   update: function ()
   {
 
@@ -112,7 +118,7 @@ CookieNoir.GameParallax.prototype =
   setDirectionArrow: function(direction, pos)
   {
 
-    let text = this.add.text(this.world.width / 2, 32,
+    let text = this.make.text( pos, 32,
     direction,
     {
       fill: "#ffffff",
@@ -121,46 +127,47 @@ CookieNoir.GameParallax.prototype =
     });
     text.anchor.setTo(0.5,0.0);
     let alphaTween = this.game.add.tween(text).to( { alpha: 0.1  }, 1000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    this.foreground.add(text);
 
     this.directionIndicator = {text: text, tween: alphaTween};
   },
 
   movePlayer: function()
   {
-    let upperBound = this.platform0.width;
-    let lowerbound = 0;
-
     // movement
     if (this.cursors.right.isDown) {
-      this.foreground.forEach((item) => {
 
-        let newItemPos = item.position.x - 6;
-        if ((Math.abs(newItemPos) + this.world.width) <= upperBound) {
-          item.position.x = newItemPos;
+      let upperBound = (this.bgTile0.width / 2 - 800) * -1;
+        // debugger;
+        let newItemPos = this.bgTile0.position.x - 4;
+        if (newItemPos >= upperBound) {
+          this.bgTile0.position.x = newItemPos;
           this.middle.forEach(function(item) {
             item.position.x -= 5;
           });
-          this.bgTile0.position.x -= 4;
+          this.foreground.forEach(function(item) {
+            item.position.x -= 6;
+          });
           this.playerPos += 4;
           // this.bgTile1.tilePosition.x -= 5;
         }
-      });
     }
     else if (this.cursors.left.isDown) {
 
-        this.foreground.forEach((item) => {
-
-          let newItemPos = item.position.x + 6;
-          if (newItemPos <= lowerbound) {
-            item.position.x += 6;
+          let lowerBound = this.bgTile0.width / 2;
+          let newItemPos = this.bgTile0.position.x + 4;
+          // console.log("lower: ");
+          if (newItemPos <= lowerBound) {
+            this.bgTile0.position.x += 4;
             this.middle.forEach(function(item) {
               item.position.x += 5;
             });
-            this.bgTile0.position.x += 4;
+            this.foreground.forEach(function(item) {
+              item.position.x += 6;
+            });
             this.playerPos -= 4;
             // this.bgTile1.tilePosition.x += 5;
           }
-        });
     }
   },
   switchPlane: function(up){
@@ -174,18 +181,21 @@ CookieNoir.GameParallax.prototype =
       for (let c in this.platformJSON.connections) {
         let con = this.platformJSON.connections[c];
         let posX = con.posX;
-        let relpos = this.playerPos / this.width;
-        if (posX > relpos - 0.1 && posX < relpos + 0.1 && con.pfkey.split("_")[1] > this.platformKey.split("_")[1]) {
+        let relpos = this.playerPos * 1.5;
+        console.log(relpos + "/" + posX);
+        if (posX > relpos - 100 && posX < relpos + 100 && con.pfkey.split("_")[1] > this.platformKey.split("_")[1]) {
           this.platformKey = con.pfkey;
           this.platformJSON = CookieNoir.level1[this.platformKey];
-          this.playerPos = this.game.cache.getImage(this.platformKey).width / 2;
+          // this.playerPos = this.game.cache.getImage(this.platformKey).width / 2;
           this.width = this.game.cache.getImage(this.platformKey).width;
           // this.bgTile0.loadTexture(this.platformKey);
 
           this.fadePlaneOutUp(this.platform0, this.platform1);
           this.fadePlaneOutUp(this.platform1, this.bgTile0);
-          this.fadePlaneInUp(this.background, this.platformKey);
+          this.fadePlaneInUp(this.background, this.platformKey, relpos);
           this.currentLayer = this.platform0;
+
+          this.calcDirections();
 
           setTimeout(this.fixGroupOrder(), 1000);
 
@@ -220,11 +230,18 @@ CookieNoir.GameParallax.prototype =
     this.platform1.bringToTop();
     this.platform0.bringToTop();
   },
-  fadePlaneInUp: function(g, key) {
+  fadePlaneInUp: function(g, key, pos) {
+    if (this.count < 2) {
+      key = key + "_" + this.count;
+      this.count += 1
+    } else {
+      this.count = 0;
+    }
     let newBg = this.make.sprite(this.world.centerX, this.world.height, key);
     newBg.scale.setTo(0.6,0.6);
     newBg.anchor.setTo(0.5,1.0);
     newBg.position.y -= 200;
+    newBg.position.x -= pos;
     newBg.alpha = 0;
     g.add(newBg);
     let tweenIn = this.add.tween(newBg).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, true);
