@@ -38,7 +38,7 @@ CookieNoir.Client.prototype =
   },
   requestGameInfo: function()
   {
-    this.sendMessage("gaminfo");
+    this.sendMessage({type:'gameinfo'});
   },
   createPhaserMessage: function(text, duration, repeat, yoyo, callback = null)
   {
@@ -85,6 +85,13 @@ CookieNoir.Client.prototype =
         //CookieNoir.phasergame.state.getCurrentState().game.debug.text("Client: " + msg, 5, 64);
         this.createPhaserMessage(msg, 1400, 0, false);
       }
+      else if (cMsg.type == "placeEnemy")
+      {
+        if (this.clientType == CookieNoir.CLIENT_TYPE.OBSERVER)
+        {
+          console.log("Received Enemy Placement" + cMsg);
+        }
+      }
       else if (cMsg.type == "gamestart")
       {
         console.log("Game started!");
@@ -108,8 +115,7 @@ CookieNoir.Client.prototype =
         () => {
           let phaserState = CookieNoir.phasergame.state.getCurrentState();
           phaserState.isGameRunning = false;
-          //TODO: uncomment for production game functionality
-          //phaserState.state.start("Credit");
+          phaserState.state.start("Credit");
         });
 
 

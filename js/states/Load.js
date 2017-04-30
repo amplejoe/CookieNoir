@@ -40,17 +40,21 @@ CookieNoir.Load.prototype =
     this.load.image('layer2', 'assets/sprites/layer2.png');
     this.load.image('layer3', 'assets/sprites/layer3.png');
     this.load.image('layer4', 'assets/sprites/layer4.png');
-
     // map
     this.load.tilemap('level_map_topdown', 'assets/sprites/map/46/map.json', null, Phaser.Tilemap.TILED_JSON);
     // (DONT use padded sprites - creates phaser warning: Phaser.Tileset - image tile area is not an even multiple of tile size)
     this.load.atlasXML('tiles', 'assets/sprites/map/46/sprites.png', 'assets/sprites/map/46/sprites.xml');
-    this.load.image('simple_map', 'assets/sprites/map/map_simple.png');
+    this.load.image('simple_map', 'assets/sprites/map/map.png');
 
     // audio
     // music
     let music = this.load.audio('music', 'assets/audio/noir_1.mp3');
     this.audioKeys = ['music'];
+
+    // intro
+    this.load.image('intro1', 'assets/intro/intro_pic_1.png');
+    this.load.image('intro2', 'assets/intro/intro_pic_2.png');
+    this.load.image('intro3', 'assets/intro/intro_pic_3.png');
 
     // load background images of all platforms
     for (let key in CookieNoir.level1) {
