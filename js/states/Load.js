@@ -63,8 +63,28 @@ CookieNoir.Load.prototype =
       }
     };
 
+    this.load.image('pf_0_1_0', 'assets/sprites/0_1_0.png');
+    this.load.image('pf_0_1_1', 'assets/sprites/0_1_1.png');
     this.load.image('pf_1_1_0', 'assets/sprites/1_1_0.png');
     this.load.image('pf_1_1_1', 'assets/sprites/1_1_1.png');
+    this.load.image('pf_2_1_0', 'assets/sprites/2_1_0.png');
+    this.load.image('pf_2_1_1', 'assets/sprites/2_1_1.png');
+    this.load.image('pf_2_2_0', 'assets/sprites/2_2_0.png');
+    this.load.image('pf_2_2_1', 'assets/sprites/2_2_1.png');
+    this.load.image('pf_3_1_0', 'assets/sprites/3_1_0.png');
+    this.load.image('pf_3_1_1', 'assets/sprites/3_1_1.png');
+    this.load.image('pf_3_2_0', 'assets/sprites/3_2_0.png');
+    this.load.image('pf_3_2_1', 'assets/sprites/3_2_1.png');
+    this.load.image('pf_4_1_0', 'assets/sprites/4_1_0.png');
+    this.load.image('pf_4_1_1', 'assets/sprites/4_1_1.png');
+    this.load.image('pf_4_2_0', 'assets/sprites/4_2_0.png');
+    this.load.image('pf_4_2_1', 'assets/sprites/4_2_1.png');
+    this.load.image('pf_5_1_0', 'assets/sprites/5_1_0.png');
+    this.load.image('pf_5_1_1', 'assets/sprites/5_1_1.png');
+    this.load.image('pf_5_2_0', 'assets/sprites/5_2_0.png');
+    this.load.image('pf_5_2_1', 'assets/sprites/5_2_1.png');
+    this.load.image('pf_6_1_0', 'assets/sprites/6_1_0.png');
+    this.load.image('pf_6_1_1', 'assets/sprites/6_1_1.png');
 
     this.load.image('btn-clue', 'assets/sprites/popups/btn-clue.png');
     this.load.image('close', 'assets/sprites/popups/btn-close.png');

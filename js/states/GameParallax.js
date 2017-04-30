@@ -68,14 +68,14 @@ CookieNoir.GameParallax.prototype =
 
     // this.bgTile1 = this.add.tileSprite(0, 0,this.world.width, this.game.cache.getImage('bg_z-2').height, 'bg_z-2');
     // this.background.add(this.bgTile1);
-    this.platform1 = this.make.sprite(this.world.centerX, this.world.height, 'layer1');
+    this.platform1 = this.make.sprite(this.world.centerX, this.world.height, 'pf_0_1_1');
     this.platform1.scale.setTo(0.8, 0.8);
     this.platform1.anchor.setTo(0.5,1.0);
     this.platform1.position.y -= 100;
     this.middle.add(this.platform1);
 
     // active platforms
-    this.platform0 = this.make.sprite(this.world.centerX, this.world.height, 'layer0');
+    this.platform0 = this.make.sprite(this.world.centerX, this.world.height, 'pf_0_1_0');
     this.platform0.anchor.setTo(0.5,1.0);
     this.platform0.position.y -= 0;
     this.currentLayer = this.platform0;
