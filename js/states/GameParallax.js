@@ -25,27 +25,36 @@ CookieNoir.GameParallax = function (game)
   this.playerPos;
   this.width;
   this.count = 0;
+
+
+// server var
+    this.isGameRunning = false;
 };
 
 CookieNoir.GameParallax.prototype =
 {
-  create: function ()
-  {
+  create: function() {
     this.platformKey = "pf_0_1";
     this.platformJSON = CookieNoir.level1[this.platformKey];
     this.playerPos = this.world.width / 2;
 
-    // observer communication
-    // INFO: need to start server first via startserver.sh
-    this.observerClient = new CookieNoir.Client(
-      CookieNoir.SERVER_ADDRESS, CookieNoir.SERVER_PORT, CookieNoir.CLIENT_TYPE.PLAYER);
-    this.observerClient.connect();
-
-    // groups
     this.background = this.game.add.group();
     this.middle = this.game.add.group();
     this.foreground = this.game.add.group();
     this.direction = this.game.add.group();
+
+    this.observerClient = new CookieNoir.Client(
+      CookieNoir.SERVER_ADDRESS, CookieNoir.SERVER_PORT, CookieNoir.CLIENT_TYPE.PLAYER);
+    this.observerClient.connect();
+
+
+  },
+  startGame: function() {
+      this.isGameRunning = true;
+
+      this.music = this.add.audio('music', 1.0, true);
+      this.music.play();
+
     this.background.add(this.add.tileSprite(0,0, this.world.width, this.game.cache.getImage('bg_z-3').height, 'bg_z-3'));
 
     // background
@@ -106,7 +115,8 @@ CookieNoir.GameParallax.prototype =
 
   update: function ()
   {
-
+    if (!this.isGameRunning)
+      return;
     this.movePlayer();
 
   },

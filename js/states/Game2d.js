@@ -34,8 +34,8 @@ CookieNoir.Game2d.prototype = {
     map.scale.setTo(0.70);
 
     // music (volume 1.0, loop: true)
-    this.music = this.add.audio('music', 1.0, true);
-    this.music.play();
+    // this.music = this.add.audio('music', 1.0, true);
+    // this.music.play();
 
     // JSON tilemap
    //  add tilemap to game
